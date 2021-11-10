@@ -1,0 +1,51 @@
+CREATE DATABASE [OnlineStoreDatabase]
+USE [OnlineStoreDatabase]
+CREATE TABLE ItemTypes
+(
+	ItemTypeID INT PRIMARY KEY NOT NULL,
+	[Name] NVARCHAR(50)				   
+)
+CREATE TABLE Cities
+(
+	CityID INT PRIMARY KEY NOT NULL,
+	[Name] NVARCHAR(100) NOT NULL,
+			
+)
+CREATE TABLE Items
+(
+	ItemID INT PRIMARY KEY NOT NULL,
+	[Name] NVARCHAR(50) NOT NULL,
+	ItemTypeID INT NOT NULL,
+
+	FOREIGN KEY	(ItemTypeID) REFERENCES ItemTypes(ItemTypeID)
+)
+CREATE TABLE Customers
+(
+	CustomerID INT PRIMARY KEY NOT NULL,
+	[Name] NVARCHAR(100) NOT NULL,
+	Birthday DATE,
+	CityID INT NOT NULL,
+
+	FOREIGN KEY (CityID) REFERENCES Cities(CityID)
+
+);
+CREATE TABLE Orders
+(
+	OrderID INT PRIMARY KEY NOT NULL  ,
+	CustomerID INT NOT NULL,
+	FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+CREATE TABLE  OrderItems
+(
+	OrderID INT  NOT NULL,
+	ItemID INT,
+	CONSTRAINT PK_ORDERID_ITEMID PRIMARY KEY (OrderID,ItemID),
+	FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)	,
+	FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+
+)
+
+
+
+
+
